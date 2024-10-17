@@ -1,0 +1,6 @@
+<h1>Blog Sections</h1>
+<ul>
+    {% for section in sections %}
+        <li><a href="{% url 'post_list' section.slug %}">{{ section.name }}</a></li>
+    {% endfor %}
+</ul>
