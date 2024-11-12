@@ -2,6 +2,8 @@
 <ul>
     {% for post in posts %}
         <li>{{ post.title }} - {{ post.created_at }}</li>
+        <p>{{ post.content|truncatewords:20}}</p>
+        <a href="{% url 'post_detail' post.id %}" class="text-blue-500">Read more</a>
     {% endfor %}
 </ul>
 <a href="{% url 'section_list' %}">Back to Sections</a>
