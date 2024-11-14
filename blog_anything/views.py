@@ -5,6 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 # Create your views here.
+def home(request):
+    return render(request, 'blog_anything/index.html')
+
 def section_list(request):
     sections = Section.objects.all()
     return render(request, 'blog_anything/section_list.html', {'sections': sections})
