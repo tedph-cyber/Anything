@@ -34,3 +34,7 @@ def register_view(request):
         login(request, user)
         return redirect('home')
     return render(request, 'blog_anything/register.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')

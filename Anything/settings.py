@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'blog_anything',
     'corsheaders',
+    'tailwind',
+    'theme',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +134,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
