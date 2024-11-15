@@ -1,3 +1,7 @@
+{% extends 'blog_anything/base.html' %}
+{% load static %}
+
+{% block content %}
 <h1>{{ section.name }}</h1>
 <ul>
     {% for post in posts %}
@@ -7,3 +11,4 @@
     {% endfor %}
 </ul>
 <a href="{% url 'section_list' %}">Back to Sections</a>
+{% endblock %}

@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Section, Post
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 # Create your views here.
@@ -24,16 +25,33 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('post_list')
+            return redirect('home')
     return render(request, 'blog_anything/login.html')
 
 def register_view(request):
-    form = UserCreationForm(request.POST or None)
-    if form.is_valid():
-        user = form.save()
-        login(request, user)
-        return redirect('home')
-    return render(request, 'blog_anything/register.html', {'form': form})
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        
+        # Validation checks and error handling
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+        elif User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists.")
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, "Email already exists.")
+        else:
+            user = User.objects.create_user(username=username, email=email, password=password1)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            login(request, user)  # Log the user in
+            return redirect('home')  # Redirect after registration
+    return render(request, 'blog_anything/register.html')
 
 def logout_view(request):
     logout(request)
