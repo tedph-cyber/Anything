@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Section, Post
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
-
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -38,3 +38,24 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+def about(request):
+    context = {
+        'team_members': ['Ted', 'Aardei'],
+        'description': 'This is a blog about anything, really!',
+    }
+    return render(request, 'blog_anything/about.html', context)
+
+
+
+def search(request):
+    query = request.GET.get('query', '')  # Retrieve the search term from the query string
+    results = Section, Post.objects.filter(
+        Q(name__icontains=query) | Q(description__icontains=query)  # Adjust fields as needed
+    ) if query else []
+
+    context = {
+        'results': results,
+        'query': query
+    }
+    return render(request, 'search_results.html', context)

@@ -7,4 +7,7 @@ urlpatterns = [
     path('post/<slug:section_slug>/', views.post_list, name='post_list'),
     path('login/', views.login_view, name='login'),
     path('register/', views.register_view, name='register'),
+    path('about/', views.about, name='about'),
+     path('search/', views.search, name='search'),
+
 ]
