@@ -1,13 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <link href="{% static 'css/output.css' %}" rel="stylesheet">
-  <title>{{ post.title }}</title>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-  <meta name="description" content="{{ post.description }}">
-  <meta name="keywords" content="{{ post.keywords }}">
-</head>
+{% block content %}
 <body class="bg-gray-100">
   <div class="container mx-auto p-5">
     <h1 class="text-3xl font-bold">{{ post.title }}</h1>
@@ -16,4 +10,4 @@
     <a href="{% url 'home' %}" class="text-blue-500">Back to Home</a>
   </div>
 </body>
-</html>
+{% endblock %}

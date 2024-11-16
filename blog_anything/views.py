@@ -18,6 +18,11 @@ def post_list(request, section_slug):
     posts = section.posts.all()
     return render(request, 'blog_anything/post_list.html', {'section': section, 'posts': posts})
 
+def post_detail(request, section_slug, post_uuid):
+    post = get_object_or_404(Post, uuid=post_uuid)
+    section = get_object_or_404(Section, slug=section_slug)
+    return render(request, 'blog_anything/post_detail.html', {'post': post})
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
