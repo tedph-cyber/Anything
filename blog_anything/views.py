@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-from django.shortcuts import render, redirect,  get_object_or_404
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm
-=======
 from django.shortcuts import render, get_object_or_404, redirect
->>>>>>> features/authentication
 from .models import Section, Post
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -14,12 +8,8 @@ from django.contrib import messages
 
 # Create your views here.
 def home(request):
-<<<<<<< HEAD
     return render(request, "blog_anything/index.html")
 
-=======
-    return render(request, 'blog_anything/index.html')
->>>>>>> features/authentication
 
 def section_list(request):
     sections = Section.objects.all()
@@ -29,8 +19,6 @@ def post_list(request, section_slug):
     section = get_object_or_404(Section, slug=section_slug)
     posts = section.posts.all()
     return render(request, 'blog_anything/post_list.html', {'section': section, 'posts': posts})
-
-<<<<<<< HEAD
 
 def login_view(request):
     if request.method == "POST":
@@ -42,15 +30,6 @@ def login_view(request):
             return redirect("home")
     return render(request, "blog/login.html")
 
-
-def register_view(request):
-    form = UserCreationForm(request.POST or None)
-    if form.is_valid():
-        user = form.save()
-        login(request, user)
-        return redirect("home")
-    return render(request, "blog/register.html", {"form": form})
-=======
 def post_detail(request, section_slug, post_uuid):
     post = get_object_or_404(Post, uuid=post_uuid)
     section = get_object_or_404(Section, slug=section_slug)
@@ -94,4 +73,3 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
->>>>>>> features/authentication
