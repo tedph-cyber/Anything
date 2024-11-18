@@ -1,22 +1,35 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} Login {% endblock %}
+{% load socialaccount %}
+{% block title %}Login{% endblock %}
 {% block content %}
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="w-full max-w-md p-8 bg-white rounded shadow-md">
-    <h2 class="text-2xl font-semibold mb-6">Login</h2>
-    {% if messages %}
-      {% for message in messages %}
-        <p class="text-red-500">{{ message }}</p>
-      {% endfor %}
-    {% endif %}
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      <input type="text" name="username" placeholder="Username" class="border p-2 rounded w-full mt-2">
-      <input type="password" name="password" placeholder="Password" class="border p-2 rounded w-full mt-2">
-      <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full mt-4">Login</button>
-    </form>
-    <p class="text-sm mt-4">Don't have an account? <a href="{% url 'register' %}" class="text-blue-500">Sign up</a></p>
-  </div>
-</body>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md p-8 bg-white rounded shadow-md">
+      <h2 class="text-2xl font-semibold mb-6">Login</h2>
+      {% if messages %}
+        {% for message in messages %}<p class="text-red-500">{{ message }}</p>{% endfor %}
+      {% endif %}
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <input type="text"
+               name="username"
+               placeholder="Username"
+               class="border p-2 rounded w-full mt-2">
+        <input type="password"
+               name="password"
+               placeholder="Password"
+               class="border p-2 rounded w-full mt-2">
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full mt-4">Login</button>
+      </form>
+      <p class="text-sm mt-4">
+        Don't have an account? <a href="{% url 'register' %}" class="text-blue-500">Sign up</a>
+      </p>
+      <div class="mx-3 ">
+        <h3 class="mx-auto flex py-4 font-bold justify-center">OR</h3>
+        <a href="{% provider_login_url 'google' %}">
+          <button class="border hover:bg-blue-500 text-black font-semibold flex py-4 px-6 mx-auto rounded-full">Login with Google</button>
+        </a>
+      </div>
+    </div>
+  </body>
 {% endblock %}

@@ -1,3 +1,4 @@
+import uuid 
 from django.db import models
 
 # Create your models here.
@@ -10,6 +11,7 @@ class Section(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     content = models.TextField()
     section = models.ForeignKey(Section, related_name='posts', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

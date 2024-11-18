@@ -1,9 +1,8 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<head>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Homepage</title>
-</head>
+{% block content %}
+
 <body class="bg-gray-100">
     <div class="container mx-auto p-5">
         <h1 class="text-3xl text-red font-bold">Blog Sections</h1>
@@ -16,3 +15,4 @@
         </ul>
     </div>
 </body>
+{% endblock %}
