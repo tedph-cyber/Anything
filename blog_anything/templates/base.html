@@ -1,45 +1,82 @@
-{% load tailwind_tags %}
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Website{% endblock %}</title>
-    <meta name="description" content="Welcome to MyWebsite, your go-to source for amazing content.">
-    <meta name="keywords" content="website, blog, content, articles">
-    {% tailwind_css %}
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <title>{% block title %}Anything{% endblock %}</title>
 </head>
+
 <body class="bg-gray-100 text-gray-800">
     <!-- Navbar -->
-    <header class="bg-blue-600 text-white shadow-md">
-        <div class="container mx-auto flex items-center justify-between py-4 px-6">
-            <a href="/" class="text-2xl font-semibold">Anything</a>
-            <nav class="space-x-4">
-                <a href="/" class="hover:underline">Home</a>
-                <a href="/sections" class="hover:underline">Sections</a>
-                <a href="/contact" class="hover:underline">Contact</a>
-                {% if user.is_authenticated %}
-                    <a href="/logout" class="hover:underline">Logout</a>
-                {% else %}
-                    <a href="/login" class="hover:underline">Login</a>
-                    <a href="/register" class="hover:underline">Sign Up</a>
-                {% endif %}
-            </nav>
+    <nav class="relative px-5 flex justify-between items-center h-14 bg-blue-600 drop-shadow-md">
+        <!-- Logo -->
+        <div>
+            <a href="#" class="text-white text-2xl font-semibold italic">ANYTHING</a>
         </div>
-    </header>
+
+        <!-- Main navigation menu -->
+        <div id="main-nav" class="hidden absolute top-14 right-0 px-5 py-10 bg-gray-700 h-screen flex flex-col 
+            md:flex md:space-y-0 md:relative md:top-0 md:right-0 md:p-0 md:flex-row md:h-full md:flex-grow md:justify-between md:items-center md:ml-10 md:bg-inherit">
+            
+            <!-- Menu Links -->
+            <div class="order-last flex flex-col items-end text-gray-200 space-y-3 md:flex-row md:items-start md:order-first md:space-y-0 md:space-x-3">
+                <a class="text-white" href="/">Home</a>
+                <a href="/sections" class="hover:text-white">Sections</a>
+                <a href="/contact" class="hover:text-white">Contact</a>
+                {% if user.is_authenticated %}
+                    <a href="/logout" class="hover:text-white">Logout</a>
+                {% else %}
+                    <a href="/login" class="hover:text-white">Login</a>
+                    <a href="/register" class="hover:text-white">Sign Up</a>
+                {% endif %}
+            </div>
+
+            <!-- Search box -->
+            <form class="order-first mb-10 md:mb-0 md:order-last md:pr-8 relative"
+             action="{% url 'search' %}" 
+             method="get">
+                <input 
+                    class="w-72 py-1 pl-3 pr-10 rounded-full text-gray-800 focus:outline-0" 
+                    type="text" 
+                    placeholder="Search.." 
+                    name="query"
+                    value="{{ request.GET.query|default:'' }}" 
+                />
+                <button 
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent" 
+                    type="submit">
+                    <i class="fa fa-search text-gray-300"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Hamburger icon for mobile screens -->
+        <a class="md:hidden text-white text-2xl" href="javascript:void(0)" onclick="toggleMenu()">
+            <i id="toggle-menu-icon" class="fa-solid fa-bars"></i>
+        </a>
+    </nav>
 
     <!-- Main Content -->
-    <main class="container mx-auto my-8 px-6 flex justify-center">
+    <main class="p-5">
         {% block content %}
-        <!-- Page-specific content goes here -->
         {% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-blue-600 text-white py-4 mt-12">
-        <div class="container mx-auto text-center">
-            <p> &copy; 2024 Anything. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- Javascript for menu toggle -->
+    <script>
+        var mainNav = document.getElementById("main-nav");
+        var toggleMenuIcon = document.getElementById("toggle-menu-icon");
+
+        function toggleMenu() {
+            mainNav.classList.toggle('hidden');
+            toggleMenuIcon.classList.toggle('fa-bars');
+            toggleMenuIcon.classList.toggle('fa-times');
+        }
+    </script>
 </body>
+
 </html>

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <h2 class="text-2xl font-semibold">Search Results for "{{ query }}"</h2>
+    <ul class="list-disc list-inside mt-5">
+        {% for item in results %}
+            <li class="text-lg">{{ item.name }}</li>  <!-- Adjust fields as needed -->
+        {% empty %}
+            <p class="text-gray-500">No results found</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

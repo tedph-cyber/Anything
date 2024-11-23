@@ -9,4 +9,7 @@ urlpatterns = [
     path('post/<slug:section_slug>/<uuid:post_uuid>/', views.post_detail, name='post_detail'),
     path('login/', views.login_view, name='login'),
     path('register/', views.register_view, name='register'),
+    path('about/', views.about, name='about'),
+    path('search/', views.search, name='search'),
+
 ]

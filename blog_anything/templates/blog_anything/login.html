@@ -3,7 +3,7 @@
 {% load socialaccount %}
 {% block title %}Login{% endblock %}
 {% block content %}
-  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="flex justify-center bg-gray-100 py-12">
     <div class="w-full max-w-md p-8 bg-white rounded shadow-md">
       <h2 class="text-2xl font-semibold mb-6">Login</h2>
       {% if messages %}
@@ -31,5 +31,6 @@
         </a>
       </div>
     </div>
-  </body>
+  </div>
 {% endblock %}
+
