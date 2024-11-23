@@ -11,5 +11,4 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('about/', views.about, name='about'),
     path('search/', views.search, name='search'),
-
 ]
