@@ -19,14 +19,14 @@
         </div>
 
         <!-- Main navigation menu -->
-        <div id="main-nav" class="hidden absolute top-14 right-0 px-5 py-10 bg-gray-700 h-screen flex flex-col 
+        <div id="main-nav" class="hidden absolute top-14 right-0 px-5 py-10 bg-gray-700 h-screen flex-col 
             md:flex md:space-y-0 md:relative md:top-0 md:right-0 md:p-0 md:flex-row md:h-full md:flex-grow md:justify-between md:items-center md:ml-10 md:bg-inherit">
             
             <!-- Menu Links -->
             <div class="order-last flex flex-col items-end text-gray-200 space-y-3 md:flex-row md:items-start md:order-first md:space-y-0 md:space-x-3">
                 <a class="text-white" href="/">Home</a>
                 <a href="/sections" class="hover:text-white">Sections</a>
-                <a href="/contact" class="hover:text-white">Contact</a>
+                <a href="/about" class="hover:text-white">Contact</a>
                 {% if user.is_authenticated %}
                     <a href="/logout" class="hover:text-white">Logout</a>
                 {% else %}
@@ -37,8 +37,8 @@
 
             <!-- Search box -->
             <form class="order-first mb-10 md:mb-0 md:order-last md:pr-8 relative"
-             action="{% url 'search' %}" 
-             method="get">
+                action="{% url 'search' %}" 
+                method="get">
                 <input 
                     class="w-72 py-1 pl-3 pr-10 rounded-full text-gray-800 focus:outline-0" 
                     type="text" 
@@ -61,13 +61,13 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="p-5">
+    <main class="p-5 h-screen">
         {% block content %}
         {% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="bg-blue-600 text-white py-4 mt-12">
+    <footer class="bg-blue-600 text-white py-6 mt-12">
         <div class="container mx-auto text-center">
             <p> &copy; 2024 Anything. All rights reserved.</p>
         </div>

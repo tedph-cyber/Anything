@@ -10,7 +10,7 @@
                     <li>{{ post.title }} - {{ post.created_at }}</li>
                     <p>{{ post.content|truncatewords:20 }}</p>
                     <a href="{% url 'post_detail' section.slug post.uuid %}"
-                       class="text-blue-500">Read more</a>
+                        class="text-blue-500">Read more</a>
                 {% endfor %}
             </ul>
         </div>

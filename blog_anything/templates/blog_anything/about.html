@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="p-5">
     <section>
@@ -13,7 +13,7 @@
     <h2 class="text-2xl font-semibold mb-3">If anything, y'all should know about </h2>
     <ul class="list-disc ml-5">
         {% for member in team_members %}
-           <li><h3 class="text-2xl font-semibold mb-3"> {{ member }}</h3></li>
+            <li><h3 class="text-2xl font-semibold mb-3"> {{ member }}</h3></li>
         
         {% endfor %}
     </ul>
