@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
+{% load socialaccount %}
 {% block title %} Sign up {% endblock %}
 {% block content %}
-<body class="flex items-center justify-center h-screen bg-gray-100">
-
+<div class="flex justify-center h-screen bg-gray-100">
     <div class="w-full max-w-md p-8 bg-white rounded shadow-md">
         <h2 class="text-2xl font-bold text-center mb-6">Register</h2>
 
@@ -56,8 +56,14 @@
             <button type="submit" class="w-full py-4 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600">Sign Up</button>
         </form>
 
+        <div class="mx-3 ">
+            <h3 class="mx-auto flex py-4 font-bold justify-center">OR</h3>
+            <a href="{% provider_login_url 'google' %}">
+            <button class="border hover:bg-blue-500 text-black font-semibold flex py-4 px-8 mx-auto border-black rounded-lg">Login with Google</button>
+            </a>
+        </div>
         <p class="mt-4 text-center text-gray-500">Already have an account? <a href="{% url 'login' %}" class="text-blue-500 hover:underline">Log in</a></p>
     </div>
 
-</body>
+</div>
 {% endblock %}
