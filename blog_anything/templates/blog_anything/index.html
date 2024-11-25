@@ -1,29 +1,14 @@
-{% extends "base.html" %}
+    {% extends "base.html" %}
 
 {% block content %}
-
-
-<style>
-    .home-container{
-        display: grid;
-        grid-template-columns: 1fr 3fr;
-    }
-</style>
-
-
-<section >
-    <header class="bg-white space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6">
-      <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-slate-900">Quote of the day</h2>
-        <a href="/new" class="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm">
-          <svg width="20" height="20" fill="currentColor" class="mr-2" aria-hidden="true">
-            <path d="M10 5a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V6a1 1 0 0 1 1-1Z" />
-          </svg>
-          Add quote
-        </a>
-      </div>
-    </header>
-    <hr>
-  </section>
-
+<main>
+    <section>
+        <div class="m-10 rounded-lg bg-white px-6 py-8 shadow-xl ring-1 ring-slate-900/5">
+            <h3 class="text-base font-medium tracking-tight text-slate-900 dark:text-white">Quote of the day</h3>
+            <p class="mt-2 text-sm text-slate-500 dark:text-blue-100">"To err is human, to forgive is divine"</p>
+    
+            <button id="addQuote" class="mt-8 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white" onclick="document.body.classList.toggle('dark')">Add Quote</button>
+        </div>  
+    </section>
+</main>
 {% endblock %}
