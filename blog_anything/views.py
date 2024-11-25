@@ -1,22 +1,30 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Section, Post
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 
 # Create your views here.
 def home(request):
-    return render(request, "blog_anything/index.html")
+    sections = Section.objects.all()
 
+    # Loop through sections to attach the latest post to each
+    for section in sections:
+        latest_post = section.posts.order_by('-created_at').first()  # Get the latest post
+        section.latest_post = latest_post  # Attach the latest post to the section object
 
+    return render(request, "blog_anything/index.html", {'sections': sections})
+
+@login_required
 def section_list(request):
     sections = Section.objects.all()
     return render(request, 'blog_anything/section_list.html', {'sections': sections})
 
+@login_required
 def post_list(request, section_slug):
     section = get_object_or_404(Section, slug=section_slug)
     posts = section.posts.all()
@@ -78,12 +86,10 @@ def logout_view(request):
 
 def about(request):
     context = {
-        'team_members': ['Ted', 'Aardei'],
+        'team_members': ['TeD', 'Aardei'],
         'description': 'This is a blog about anything, really!',
     }
     return render(request, 'blog_anything/about.html', context)
-
-
 
 def search(request):
     query = request.GET.get('query', '')  # Retrieve the search term from the query string
