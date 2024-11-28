@@ -14,7 +14,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('search/', views.search, name='search'),
     path("profile/", profile_view, name="profile"),
-
     path('sections/create/', views.section_create, name='section_create'),
     path('post/create/<slug:section_slug>/', views.post_create, name='post_create'),
 ]
