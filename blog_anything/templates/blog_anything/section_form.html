@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Section{% endblock %}
+{% block content %}
+<div class="container mx-auto p-5">
+    <h1 class="text-2xl font-bold">Create Section</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="mt-4 bg-blue-600 text-white py-2 px-4 rounded">Create Section</button>
+    </form>
+</div>
+{% endblock %}

@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .forms import SectionForm, PostForm
 
 
 
@@ -117,3 +118,31 @@ def search(request):
         'query': query
     }
     return render(request, 'search_results.html', context)
+
+@login_required
+def section_create(request):
+    if request.method == 'POST':
+        form = SectionForm(request.POST)
+        if form.is_valid():
+            section = form.save(commit=False)
+            section.created_by = request.user
+            section.save()
+            return redirect('section_list')
+    else:
+        form = SectionForm()
+    return render(request, 'blog_anything/section_form.html', {'form': form})
+
+@login_required
+def post_create(request, section_slug):
+    section = get_object_or_404(Section, slug=section_slug)
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.section = section
+            post.created_by = request.user
+            post.save()
+            return redirect('post_list', section_slug=section.slug)
+    else:
+        form = PostForm()
+    return render(request, 'blog_anything/post_form.html', {'form': form, 'section': section})
