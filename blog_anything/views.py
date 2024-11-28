@@ -5,6 +5,9 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import UserProfile
+from .forms import UserProfileForm
+from .forms import SectionForm, PostForm
 
 
 
@@ -32,13 +35,23 @@ def post_list(request, section_slug):
 
 def login_view(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(f"Username: {username}, Password: {password}")
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        print(f"Authenticated User: {user}")
+        if user is None:
+            messages.error(request, 'Invalid username or password.')
+            print("Authentication failed")
+        else:  
             login(request, user)
-            return redirect("home")
-    return render(request, "blog/login.html")
+            print("Login successful")
+            return redirect('home')  # Redirect to home after successful login
+    next_url = request.GET.get('next')
+    if next_url:
+        messages.error(request, 'You must be logged in to view this page')
+    print(messages.get_messages(request))  # This will show you the messages in the console
+    return render(request, "blog_anything/login.html")
 
 def post_detail(request, section_slug, post_uuid):
     post = get_object_or_404(Post, uuid=post_uuid)
@@ -53,6 +66,11 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return redirect('home')
+        else:
+            messages.error(request, 'Invalid username or password.')
+    next_url = request.GET.get('next')
+    if next_url:
+        messages.info(request, 'You need to log in to access that page.')
     return render(request, 'blog_anything/login.html')
 
 def register_view(request):
@@ -102,3 +120,44 @@ def search(request):
         'query': query
     }
     return render(request, 'search_results.html', context)
+
+@login_required
+def profile_view(request):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == "POST":
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect("profile")
+    else:
+        form = UserProfileForm(instance=profile)
+
+    return render(request, "blog_anything/profile.html", {"form": form, "profile": profile})
+@login_required
+def section_create(request):
+    if request.method == 'POST':
+        form = SectionForm(request.POST)
+        if form.is_valid():
+            section = form.save(commit=False)
+            section.created_by = request.user
+            section.save()
+            return redirect('section_list')
+    else:
+        form = SectionForm()
+    return render(request, 'blog_anything/section_form.html', {'form': form})
+
+@login_required
+def post_create(request, section_slug):
+    section = get_object_or_404(Section, slug=section_slug)
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.section = section
+            post.created_by = request.user
+            post.save()
+            return redirect('post_list', section_slug=section.slug)
+    else:
+        form = PostForm()
+    return render(request, 'blog_anything/post_form.html', {'form': form, 'section': section})

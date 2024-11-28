@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import profile_view
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -11,4 +13,8 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('about/', views.about, name='about'),
     path('search/', views.search, name='search'),
+    path("profile/", profile_view, name="profile"),
+
+    path('sections/create/', views.section_create, name='section_create'),
+    path('post/create/<slug:section_slug>/', views.post_create, name='post_create'),
 ]

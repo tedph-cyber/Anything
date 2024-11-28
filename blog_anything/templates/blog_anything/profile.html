@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="container mx-auto p-5">
+    <h2 class="text-2xl font-bold mb-4">{{user}}'s Profile</h2>
+    <div class="flex space-x-8">
+        <div>
+            {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="w-32 h-32 rounded-full">
+            {% else %}
+                <div class="w-32 h-32 bg-gray-300 rounded-full"></div>
+            {% endif %}
+        </div>
+        <div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update Profile</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
