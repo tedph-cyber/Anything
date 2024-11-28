@@ -173,3 +173,6 @@ SOCIALACCOUNT_PROVIDERS = {
     #     'SECRET': config('GOOGLE_CLIENT_SECRET'),
     }
 }
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
