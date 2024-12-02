@@ -10,15 +10,14 @@ from .forms import UserProfileForm
 from .forms import SectionForm, PostForm
 
 
-
 # Create your views here.
 def home(request):
     sections = Section.objects.all()
 
-    # Loop through sections to attach the latest post to each
+    # Attach the latest post to each section
     for section in sections:
-        latest_post = section.posts.order_by('-created_at').first()  # Get the latest post
-        section.latest_post = latest_post  # Attach the latest post to the section object
+        latest_post = section.posts.order_by('-created_at').first()
+        section.latest_post = latest_post
 
     return render(request, "blog_anything/index.html", {'sections': sections})
 
@@ -134,30 +133,45 @@ def profile_view(request):
         form = UserProfileForm(instance=profile)
 
     return render(request, "blog_anything/profile.html", {"form": form, "profile": profile})
+
 @login_required
-def section_create(request):
+def create(request):
     if request.method == 'POST':
-        form = SectionForm(request.POST)
-        if form.is_valid():
-            section = form.save(commit=False)
+        form_1 = SectionForm(request.POST)
+        form_2 = PostForm(request.POST)
+        if form_1.is_valid() & form_2.is_valid():
+            section = form_1.save(commit=False)
             section.created_by = request.user
             section.save()
+            post = form_2.save(commit=False)
+            post.section = section
+            post.created_by = request.user
+            post.save()
             return redirect('section_list')
     else:
-        form = SectionForm()
-    return render(request, 'blog_anything/section_form.html', {'form': form})
+        form_1 = SectionForm()
+        form_2 = PostForm()
+    return render(request, 'blog_anything/create.html', {'form_1': form_1, 'form_2': form_2})
 
 @login_required
 def post_create(request, section_slug):
     section = get_object_or_404(Section, slug=section_slug)
+
     if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.section = section
-            post.created_by = request.user
-            post.save()
-            return redirect('post_list', section_slug=section.slug)
-    else:
-        form = PostForm()
-    return render(request, 'blog_anything/post_form.html', {'form': form, 'section': section})
+        # Get the post title from the form
+        title = request.POST.get('title')
+        
+        # Create the post and associate it with the section
+        post = Post.objects.create(
+            title=title,
+            content= request.POST.get('content'),  # Optionally leave content empty or add logic for content later
+            section=section,
+            created_by=request.user,
+        )
+        
+        messages.success(request, 'Post created successfully.')
+        
+        
+        return redirect('post_list', section_slug=section.slug)
+    
+    return redirect('home')  # Redirect to home if accessed via GET
