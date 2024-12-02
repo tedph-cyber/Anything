@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Section{% endblock %}
+{% block content %}
+<div class="container mx-auto p-5">
+    <h1 class="text-3xl font-bold mb-5">Create Section & Post</h1>
+    <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+        
+        <h2 class="text-xl font-semibold mb-4">Section Details</h2>
+        {{ form_1.as_p }}
+
+        <h2 class="text-xl font-semibold mt-6 mb-4">Post Details</h2>
+        {{ form_2.as_p }}
+
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+            Create Section and Post
+        </button>
+    </form>
+</div>
+{% endblock %}
