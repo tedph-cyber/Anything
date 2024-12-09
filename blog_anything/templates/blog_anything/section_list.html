@@ -13,6 +13,12 @@
                 </li>
             {% endfor %}
         </ul>
+        {% comment %} button to redirect to the creation of both post and section, aesthetics to be worked on eventually {% endcomment %}
+        <div class="flex">
+            <button class="mt-8 rounded-full bg-blue-600 px-4 py-2 text-sm font-medium flex text-white" onclick="document.body.classList.toggle('dark')">
+                <a href="{% url 'create' %}">Create a new section</a>
+            </button>
+        </div>
     </div>
 </body>
 {% endblock %}

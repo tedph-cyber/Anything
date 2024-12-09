@@ -88,6 +88,25 @@
             toggleMenuIcon.classList.toggle('fa-bars');
             toggleMenuIcon.classList.toggle('fa-times');
         }
+
+        function openModal(slug) {
+            document.getElementById(`modal-${slug}`).classList.remove('hidden');
+        }
+
+        function closeModal(slug) {
+            document.getElementById(`modal-${slug}`).classList.add('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                // Delay the redirect to give the user time to see the success message
+                setTimeout(() => {
+                    successMessage.style.opacity = '0';
+                    successMessage.style.transition = 'opacity 1s ease-out';
+                }, 3000); // Display the message for 3 seconds before fading out
+            }
+        });
     </script>
 </body>
 
