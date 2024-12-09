@@ -1,3 +1,4 @@
+{%load static%}
 <!doctype html>
 <html>
 
@@ -5,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="{% static 'images/anything.jpg' %}" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <title>{% block title %}Anything{% endblock %}</title>
@@ -14,8 +16,9 @@
     <!-- Navbar -->
     <nav class="relative px-5 flex justify-between items-center h-14 bg-blue-600 drop-shadow-md">
         <!-- Logo -->
-        <div>
-            <a href="#" class="text-white text-2xl font-semibold italic">ANYTHING</a>
+        <div class="flex">
+            <img src="{% static 'images/anything.jpg' %}" alt="Anything logo" height="50" width="50" class="flex p-2 aspect-auto rounded-full">
+            <a href="#" class="text-white text-2xl p-2 font-semibold italic">ANYTHING</a>
         </div>
 
         <!-- Main navigation menu -->
